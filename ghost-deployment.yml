@@ -1,0 +1,43 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: ghost-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ghost
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template: 
+    metadata: 
+      labels:
+        app: ghost
+    spec: 
+      containers:
+      - name: ghost
+        image: ghost:1.21.2-alpine
+        ports:
+        - containerPort: 2368
+        env:
+        - name: database__client
+          value: mysql
+        - name: database__connection__host
+          value: localhost
+        - name: database__connection__user
+          value: root
+        - name: database__connection__password
+          value: example
+        - name: database__connection__database
+          value: ghost
+      - name: db
+        image: mysql:5.7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: example

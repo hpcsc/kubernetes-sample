@@ -1,0 +1,38 @@
+apiVersion: apps/v1beta2
+kind: ReplicaSet
+metadata:
+  name: ghost-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ghost
+  template: # pod template
+    metadata: # pod metadata
+      labels:
+        app: ghost
+    spec: # pod spec
+      containers:
+      - name: ghost
+        image: ghost:1-alpine
+        ports:
+        - containerPort: 2368
+        env:
+        - name: database__client
+          value: mysql
+        - name: database__connection__host
+          value: localhost
+        - name: database__connection__user
+          value: root
+        - name: database__connection__password
+          value: example
+        - name: database__connection__database
+          value: ghost
+      - name: db
+        image: mysql:5.7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: example
+           
