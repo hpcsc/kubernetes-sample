@@ -3,9 +3,7 @@
 Sample Kubernetes scripts to deploy Ghost blog to a Kubernetes cluster in local
 Deployment structure:
 
-```
-ghost-svc -> ghost-deploy (3 pods) -> mysql-svc -> mysql-deploy (1 pod)
-```
+![Deployment Architecture](https://raw.githubusercontent.com/hpcsc/kubernetes-sample/master/deployment-architecture.png "Deployment Architecture")
 
 ## Deploy using Kubernetes Deployments to local cluster
 
